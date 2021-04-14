@@ -1,58 +1,46 @@
 from PyQt5 import QtCore, QtWidgets
-from PyQt5.QtWidgets import QWidget
-
-from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QGridLayout
-from PyQt5.QtWidgets import QLineEdit
-from PyQt5.QtWidgets import QPushButton
-from PyQt5.QtWidgets import QVBoxLayout
-
+from PyQt5.QtCore import Qt, QSize
+from PyQt5.QtWidgets import QGridLayout, QLineEdit, QPushButton, QVBoxLayout, QWidget, QApplication, QMainWindow, QWidget
 # from PySide import QtGui # color buttons
 
-# Filename: pycalc.py
-
-"""PyCalc is a simple calculator built using Python and PyQt5."""
-
 import sys
-
-# Import QApplication and the required widgets from PyQt5.QtWidgets
-from PyQt5.QtWidgets import QApplication
-from PyQt5.QtWidgets import QMainWindow
-from PyQt5.QtWidgets import QWidget
-from PyQt5.QtCore import QSize
 
 from functools import partial
 
 ERROR_MSG = 'ERROR'
 
-# Create a subclass of QMainWindow to setup the calculator's GUI
-class PyCalcUi(QMainWindow):
-    """PyCalc's View (GUI)."""
+class Calculator(QMainWindow):
+    """Calculator's View (GUI)."""
     def __init__(self):
+
         """View initializer."""
         super().__init__()
         # Set some main window's properties
         self.setWindowTitle('Kalkulator')
         #self.setFixedSize(235, 235)
+
         # Set the central widget and the general layout
         self.generalLayout = QVBoxLayout()
+
         # Set the central widget
         self._centralWidget = QWidget(self)
         self._centralWidget.setLayout(self.generalLayout)
         self.setCentralWidget(self._centralWidget)
+
         # Create the display and the buttons
         self._createDisplay()
         self._createButtons()
 
-    # Snip
     def _createDisplay(self):
         """Create the display."""
         # Create the display widget
         self.display = QLineEdit()
+
         # Set some display's properties
         self.display.setFixedHeight(35)
         self.display.setAlignment(Qt.AlignRight)
         self.display.setReadOnly(True)
+
         # Add the display to the general layout
         self.generalLayout.addWidget(self.display)
 
@@ -60,6 +48,7 @@ class PyCalcUi(QMainWindow):
         """Create the buttons."""
         self.buttons = {}
         buttonsLayout = QGridLayout()
+
         # Button text | position on the QGridLayout
         buttons = {'Backspace': (0, 1),
                    'CE': (0, 2),
@@ -86,6 +75,7 @@ class PyCalcUi(QMainWindow):
                    '.': (4, 3),
                    '+': (4, 4),
                   }
+
         # Create the buttons and add them to the grid layout
         for btnText, pos in buttons.items():
             self.buttons[btnText] = QPushButton(btnText)
@@ -98,6 +88,7 @@ class PyCalcUi(QMainWindow):
                 self.buttons[btnText].setFixedSize(80, 40)
             self.buttons[btnText].setSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
             buttonsLayout.addWidget(self.buttons[btnText], pos[0], pos[1], alignment=QtCore.Qt.AlignRight)
+            
         # Add buttonsLayout to the general layout
         self.generalLayout.addLayout(buttonsLayout)
 
@@ -115,12 +106,13 @@ class PyCalcUi(QMainWindow):
         self.setDisplayText('')
 
 # Create a Controller class to connect the GUI and the model
-class PyCalcCtrl:
+class CalculatorControl:
     """PyCalc Controller class."""
     def __init__(self, model, view):
         """Controller initializer."""
         self._evaluate = model
         self._view = view
+
         # Connect signals and slots
         self._connectSignals()
 
@@ -162,12 +154,15 @@ def main():
     """Main function."""
     # Create an instance of QApplication
     pycalc = QApplication(sys.argv)
+
     # Show the calculator's GUI
-    view = PyCalcUi()
+    view = Calculator()
     view.show()
+
     # Create instances of the model and the controller
     model = evaluateExpression
-    PyCalcCtrl(model=model, view=view)
+    CalculatorControl(model=model, view=view)
+
     # Execute the calculator's main loop
     sys.exit(pycalc.exec_())
 
