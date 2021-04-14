@@ -49,10 +49,9 @@ class Calculator(QMainWindow):
 
     def _createMenuBar(self):
         menuBar = self.menuBar()
-        calculatorSelectionMenu = menuBar.addMenu("&Select")
-        editMenu = menuBar.addMenu("&Edit")
-        helpMenu = menuBar.addMenu("&Help")
-        infoMenu = menuBar.addMenu("&Info")
+        calculatorSelectionMenu = menuBar.addMenu("&E\u0332dycja")
+        viewMenu = menuBar.addMenu("&W\u0332idok")
+        helpMenu = menuBar.addMenu("&Pomoc\u0332")
 
     def onClicked(self):
         radioButton = self.sender()
