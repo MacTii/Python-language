@@ -84,7 +84,7 @@ class ImageViewer(QMainWindow):
     
     def createMenuBar(self):
         menuBar = self.menuBar()
-        calculatorSelectionMenu = menuBar.addMenu("&File")
+        fileMenu = menuBar.addMenu("&File")
         viewMenu = menuBar.addMenu("&View")
         helpMenu = menuBar.addMenu("&Help")
 
