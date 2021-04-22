@@ -85,8 +85,18 @@ class ImageViewer(QMainWindow):
     def createMenuBar(self):
         menuBar = self.menuBar()
         fileMenu = menuBar.addMenu("&File")
+        fileMenu.addAction("&Open...")
+        fileMenu.addAction("&Print...")
+        fileMenu.addSeparator()
+        fileMenu.addAction("E&xit")
         viewMenu = menuBar.addMenu("&View")
+        viewMenu.addAction("Zoom &In +")
+        viewMenu.addAction("Zoom &Out -")
+        viewMenu.addAction("&Normal Size")
+        viewMenu.addSeparator()
+        viewMenu.addAction("&Fit to Window")
         helpMenu = menuBar.addMenu("&Help")
+        helpMenu.addAction("&About")
 
 if __name__ == "__main__":
     import sys
