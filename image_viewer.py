@@ -1,5 +1,5 @@
 from PyQt5 import QtCore, QtGui, QtWidgets, Qt
-from PyQt5.QtWidgets import QMainWindow, QLabel, QPushButton, QWidget, QSizePolicy
+from PyQt5.QtWidgets import QMainWindow, QLabel, QPushButton, QWidget, QSizePolicy, QMenu, QAction
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtCore import QRect
 
@@ -15,8 +15,8 @@ class ImageViewer(QMainWindow):
         #Insert images to table
         self.insertImages()
 
-        #Set first widget
-        self.centralwidget = QWidget()
+        #Set widget
+        self.widget = QWidget()
 
         #Set image
         self.setImage()
@@ -26,7 +26,7 @@ class ImageViewer(QMainWindow):
         self.setNextButton()
 
         #Set central widget
-        self.setCentralWidget(self.centralwidget)
+        self.setCentralWidget(self.widget)
 
         #Name buttons
         self.setNameButtons()
@@ -35,8 +35,11 @@ class ImageViewer(QMainWindow):
         self.nextButton.clicked.connect(self.showNext)
         self.prevButton.clicked.connect(self.showPrev)
 
+        self.createMenuBar()
+        #self.createActions()
+
     def setImage(self):
-        self.image = QLabel(self.centralwidget)
+        self.image = QLabel(self.widget)
         self.image.setGeometry(QRect(0, 0, 840, 510))
         self.pixmap = QPixmap(self.tab[self.i])
         self.image.setPixmap(self.pixmap)
@@ -49,12 +52,12 @@ class ImageViewer(QMainWindow):
         self.tab.append('./imag/image3.jpg')
 
     def setPrevButton(self):
-        self.prevButton = QPushButton(self.centralwidget)
+        self.prevButton = QPushButton(self.widget)
         self.prevButton.setGeometry(QRect(0, 510, 410, 50))
         #self.prevButton.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
 
     def setNextButton(self):
-        self.nextButton = QPushButton(self.centralwidget)
+        self.nextButton = QPushButton(self.widget)
         self.nextButton.setGeometry(QRect(410, 510, 410, 50))
         #self.nextButton.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
 
@@ -78,7 +81,12 @@ class ImageViewer(QMainWindow):
             self.i = len(self.tab) - 1
         pixmap = QPixmap(self.tab[self.i])
         self.image.setPixmap(pixmap)
-
+    
+    def createMenuBar(self):
+        menuBar = self.menuBar()
+        calculatorSelectionMenu = menuBar.addMenu("&File")
+        viewMenu = menuBar.addMenu("&View")
+        helpMenu = menuBar.addMenu("&Help")
 
 if __name__ == "__main__":
     import sys
